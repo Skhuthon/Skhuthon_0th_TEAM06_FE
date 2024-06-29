@@ -1,0 +1,116 @@
+// @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.loginGround {
+    z-index: 10;
+    position: absolute;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 99vw;
+    backdrop-filter: blur(5px) brightness(.9);
+}
+
+.loginModalContainer {
+    position: relative;
+    border-radius: 0.5em;
+    height: 14em;
+    width: 30em;
+    background-color: #353535;
+    filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.25));
+}
+
+.loginModalHeader {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 0.5em 0.5em 0 0;
+    height: 1.6em;
+    top: -1px;
+    padding: 0.2em;
+    background-color: #424242;
+    color: #FFFFFF;
+}
+
+.loginInputContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2em;
+    height: 70%;
+}
+
+.loginInputContainer div {
+    position: relative;
+}
+
+.loginInput {
+    transition: border-color 0.2s ease, border-bottom 0.2s ease;
+    font-size: 1.5em;
+    color: #FFFFFF;
+    display: inline-block;
+    border: none;
+    border-bottom: 1px solid #6C6C6C;
+    padding: 0.2em 0.2em;
+    width: 14em;
+    background: none;
+}
+
+.loginInput:focus, .loginInput:not(:placeholder-shown){
+    outline: none;
+    border-bottom: 2px solid #80C4D3;
+}
+
+/* Hide placeholder when the input is focused */
+.loginInput:focus::placeholder {
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
+}
+
+.loginLabel {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5em;
+    color: #6C6C6C;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    pointer-events: none;
+    transition: transform 0.3s ease, color 0.3s ease;
+    transform: translateY(50%);
+    opacity: 0;
+}
+
+/* Transition the label when the input is focused */
+.loginInput:focus ~ .loginLabel {
+    opacity: 1;
+    transform: translateX(-45%) translateY(-60%) scale(0.6);
+    color: #80C4D3;
+}
+/* Keep the label in place when the input is not empty */
+.loginInput:not(:placeholder-shown) ~ .loginLabel {
+    opacity: 1;
+    transform: translateX(-45%) translateY(-60%) scale(0.6);
+    color: #80C4D3;
+}
+
+.loginSubmit {
+    display: none;
+}

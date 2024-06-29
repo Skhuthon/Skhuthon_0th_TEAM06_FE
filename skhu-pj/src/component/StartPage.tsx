@@ -1,6 +1,9 @@
-// 웹 방문 시 제일 처음 출력되는 스타트 화면입니다.
-import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+// StartPage.tsx
+import React from 'react';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import LoginModal from './LoginModal';
+import '../css/LoginModal.scss';
 
 const Div = styled.div`
   flex-direction: column;
@@ -8,23 +11,26 @@ const Div = styled.div`
   align-items: center;
   height: 100vh;
   display: flex;
-  position: static;
 `;
 
-const StartPage = () => {
+const StartPage: React.FC = () => {
   const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate('/Main');
+  };
 
   return (
     <Div id="wrapper">
       <div>
-        <div>
-          <h1>로고</h1>
-          <div id="button">
-            <button onClick={() => navigate("/Main")}>실행하기</button>
-          </div>
+        <h1>로고</h1>
+        <div id="button">
+          <button onClick={handleLogin}>실행하기</button>
         </div>
       </div>
+      <LoginModal onLogin={() => {}} />
     </Div>
   );
 };
+
 export default StartPage;
