@@ -8,9 +8,11 @@ export type Upload = {
 export default Upload
 
 export type Photo = {
-  photo_title: string;
-  photo_id: number;
-  name: string;
-  phto_path: string;
+  id: string;
+ title: string;
+  userName: string;
+  audioPath: string;
+  imagePath: string;
   like_count: number;
 }
+

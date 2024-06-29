@@ -2,10 +2,12 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 import AxiosBase from "./AxiosBase";
 import "../css/Signup.scss";
 
+AxiosBase.defaults.withCredentials = true;
+
 interface RegisterData {
-  id: string;
+  loginId: string;
   pw: string;
-  nickname: string;
+  name: string;
 }
 
 interface RegisterModalProps {
@@ -14,22 +16,26 @@ interface RegisterModalProps {
 
 const Signup: React.FC<RegisterModalProps> = ({ onRegister }) => {
   const [registerData, setRegisterData] = useState<RegisterData>({
-    id: "",
+    loginId: "",
     pw: "",
-    nickname: "",
+    name: "",
   });
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const formData = new FormData();
-      formData.append("id", registerData.id);
-      formData.append("pw", registerData.pw);
-      formData.append("name", registerData.nickname);
-      
+      const formdata = new FormData();
+formdata.append("loginId", registerData.loginId);
+formdata.append("pw",registerData.pw);
+formdata.append("name", registerData.name);
 
-      const response = await AxiosBase.post(`/register`, formData);
+const response = await AxiosBase.post(`/new`, formdata);
 
+
+      // formData, {
+      //   withCredentials: true, // Ensure credentials are sent with the request
+      // });
+      console.log(response);
       if (response.status === 200) {
         alert("회원가입이 완료되었습니다.");
         onRegister();
@@ -40,7 +46,6 @@ const Signup: React.FC<RegisterModalProps> = ({ onRegister }) => {
     } catch (error) {
       console.error(error);
       alert("회원가입 처리 중 오류가 발생하였습니다.");
-
     }
   };
 
@@ -52,17 +57,6 @@ const Signup: React.FC<RegisterModalProps> = ({ onRegister }) => {
     }));
   };
 
-  // Placeholder functions for duplicate checks
-  const handleCheckDuplicateId = () => {
-    // Implement logic to check duplicate ID
-    alert("중복 체크 - ID");
-  };
-
-  const handleCheckDuplicateNickname = () => {
-    // Implement logic to check duplicate nickname
-    alert("중복 체크 - 닉네임");
-  };
-
   return (
     <div className="registerGround">
       <div className="registerModalContainer">
@@ -71,22 +65,15 @@ const Signup: React.FC<RegisterModalProps> = ({ onRegister }) => {
           <div>
             <input
               className="registerInput"
-              name="id"
+              name="loginId"
               type="text"
-              value={registerData.id}
+              value={registerData.loginId}
               onChange={handleChange}
               placeholder="ID"
             />
-            <label className="registerLabel" htmlFor="id">
+            <label className="registerLabel" htmlFor="loginId">
               ID
             </label>
-            <button
-              type="button"
-              className="duplicateCheckButton"
-              onClick={handleCheckDuplicateId}
-            >
-              중복 체크
-            </button>
           </div>
           <div>
             <input
@@ -104,24 +91,16 @@ const Signup: React.FC<RegisterModalProps> = ({ onRegister }) => {
           <div>
             <input
               className="registerInput"
-              name="nickname"
+              name="name"
               type="text"
-              value={registerData.nickname}
+              value={registerData.name}
               onChange={handleChange}
               placeholder="닉네임"
             />
-            <label className="registerLabel" htmlFor="nickname">
+            <label className="registerLabel" htmlFor="name">
               닉네임
             </label>
-            <button
-              type="button"
-              className="duplicateCheckButton"
-              onClick={handleCheckDuplicateNickname}
-            >
-              중복 체크
-            </button>
           </div>
-
           <input className="registerSubmit" type="submit" value="회원가입" />
         </form>
       </div>

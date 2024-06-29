@@ -21,7 +21,7 @@ const HeartCount: React.FC<HeartCountProps> = ({ initialCount = 0 }) => {
   return (
     <>
       <button onClick={toggleLike} style={{ background: "none", border: "none", cursor: "pointer" }}>
-        {liked ? <AiFillHeart color="red" size={24} /> : <AiOutlineHeart size={24} />}
+        {liked ? <AiFillHeart color="red" size={10} /> : <AiOutlineHeart size={24} />}
       </button>
       <span style={{ marginLeft: 10 }}>{count}</span>
       </>

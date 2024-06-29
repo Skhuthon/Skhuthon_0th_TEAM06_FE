@@ -4,13 +4,9 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { Navigate } from "react-router"; // Not sure if this is needed
 
 interface UserData {
-  id: string;
+  loginId: string;
   pw: string;
-  nickname: string;
-  student_id: string;
-  access: boolean;
-  admin: boolean;
-  gender: string;
+  name: string;
 }
 
 interface LoginModalProps {
@@ -20,13 +16,9 @@ interface LoginModalProps {
 const LoginModal: React.FC<LoginModalProps> = ({ onLogin }) => {
   const navigate = useNavigate(); // Initialize navigate
   const [userData, setUserData] = useState<UserData>({
-    id: "",
+    loginId: "",
     pw: "",
-    nickname: "",
-    student_id: "",
-    access: false,
-    admin: false,
-    gender: "",
+    name: "",
   });
 
   useEffect(() => {
@@ -42,16 +34,23 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin }) => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const formdata = new FormData();
-      formdata.append("id", userData.id);
-      formdata.append("pw", userData.pw);
+      // const formdata = new FormData();
+      // formdata.append("loginId", userData.loginId);
+      // formdata.append("pw", userData.pw);
+      // formdata.append("name", "HWANG");
 
-      const response = await AxiosBase.post(`/login`, formdata);
-      if (response.status === 200 && response.data) {
+      const formdata = new FormData();
+formdata.append("loginId", userData.loginId);
+formdata.append("pw",userData.pw);
+
+      const response = await AxiosBase.post("/login", formdata);
+
+      if (response.status === 200) {
         const userDataFromBackend: UserData = response.data;
         onLogin(userDataFromBackend);
         sessionStorage.setItem("user", "true");
         sessionStorage.setItem("userData", JSON.stringify(userDataFromBackend));
+        window.location.href = "/Main";
       } else {
         alert("로그인에 실패하였습니다.");
       }
@@ -77,14 +76,14 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin }) => {
           <div>
             <input
               className="loginInput"
-              name="id"
+              name="loginId"
               type="text"
-              value={userData.id}
+              value={userData.loginId}
               onChange={handleChange}
               placeholder="ID"
             />
             <label className="loginLabel" htmlFor="id">
-              <br/>
+              <br />
               ID
             </label>
           </div>
