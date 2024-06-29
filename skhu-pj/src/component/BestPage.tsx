@@ -1,7 +1,7 @@
-// 베스트 스냅샷 페이지입니다.
+import React, { useState, useEffect } from "react";
+import AxiosBase from "./AxiosBase"; // Import Axios instance configured for your base URL
 import NavBar from "./NavBar";
 import styled from "styled-components";
-
 
 const StyledWrapSnapDiv = styled.div`
   display: flex;
@@ -10,8 +10,25 @@ const StyledWrapSnapDiv = styled.div`
 `;
 
 const BestPage = () => {
-  //서버로부터 좋아요 높은 사진 찾아서 url받기 ***********************
-  const top3Images = ["url_image_1.jpg", "url_image_2.jpg", "url_image_3.jpg"]; // 이러면 이 세 개의 url을 서버에 있는 사진 중 좋아요가 가장 많은 사진 3개로 바꿔주는 함수를 짜면 되지 않을까요?
+  const [top3Images, setTop3Images] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchTop3Images = async () => {
+      try {
+        const response = await AxiosBase.get("/top3images"); // Adjust endpoint according to your backend API
+        if (response.status === 200 && response.data) {
+          const { images } = response.data; // Assuming your API returns an object with 'images' array
+          setTop3Images(images); // Set state with fetched image URLs
+        } else {
+          console.error("Failed to fetch top 3 images");
+        }
+      } catch (error) {
+        console.error("Error fetching top 3 images:", error);
+      }
+    };
+
+    fetchTop3Images();
+  }, []); // Empty dependency array ensures this effect runs only once on component mount
 
   return (
     <div>
@@ -34,4 +51,5 @@ const BestPage = () => {
     </div>
   );
 };
+
 export default BestPage;

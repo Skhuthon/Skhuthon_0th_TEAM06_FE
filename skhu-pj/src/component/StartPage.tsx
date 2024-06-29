@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import LoginModal from './LoginModal';
 import '../css/LoginModal.scss';
-
 const Div = styled.div`
   flex-direction: column;
   justify-content: center;
